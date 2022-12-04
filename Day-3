@@ -1,0 +1,100 @@
+/*
+Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+Return the sum of the three integers.
+
+You may assume that each input would have exactly one solution.
+*/
+
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int ans=nums[0]+nums[1]+nums[nums.length-1];
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length-2;i++){
+            int left=i+1,right=nums.length-1;
+            while(left<right){
+                int sum=nums[i]+nums[left]+nums[right];
+                if(sum>target){
+                    right--;
+                }else{
+                    left++;
+                }
+                if(Math.abs(ans-target)>Math.abs(sum-target)){
+                    ans=sum;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+/*
+Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that:
+
+0 <= i, j, k, l < n
+nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+*/
+
+class Solution {
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+         Map<Integer, Integer> map = new HashMap<Integer, Integer>(); 
+        for(int a : A)
+            for(int b : B){
+                int s = a+b;
+                map.put( s, map.getOrDefault(s, 0)+1 ); 
+            }
+        
+        int result=0;
+        for(int c : C)
+            for(int d : D){
+                int s = -c-d;
+                result += map.getOrDefault(s, 0);
+            }
+        return result; 
+        
+    }
+}
+
+/*
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order.
+*/
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int tar) {
+        List<List<Integer>>ans=new ArrayList<>();
+        Arrays.sort(nums);
+        long target=tar;
+        for(int i=0;i<nums.length-3;i++){
+            for(int j=i+1;j<nums.length-2;j++){
+                int left=j+1,right=nums.length-1;
+                while(left<right){
+                    long sum=(long)nums[i]+nums[j]+nums[left]+nums[right];
+                    if(sum==target){
+                        List<Integer>list=new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[left]);
+                        list.add(nums[right]);
+                        if(!ans.contains(list)){
+                            ans.add(list);
+                        }
+                        left++;
+                        right--;
+                        
+                    }else if(sum>target){
+                        right--;
+                    }else{
+                        left++;
+                    }
+                }
+            }
+        }
+        return ans;
+        
+    }
+}
