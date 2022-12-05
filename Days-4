@@ -1,0 +1,116 @@
+//Add Binary Number
+
+import java.util.*;
+public class AddBinaryNumbers {
+    public static void main(String[] args) {
+        long binary_input_1 , binary_input_2 ;
+        System.out.println("Required packages have been imported");
+        Scanner input = new Scanner(System.in);
+        System.out.println("A reader object has been defined ");
+        System.out.print("Enter the first binary number : ");
+        binary_input_1 = input.nextLong();
+        System.out.print("Enter the second binary number : ");
+        binary_input_2 = input.nextLong();
+        int i, carry ;
+        i = 0;
+        carry = 0;
+        int[] binary_sum = new int[10];
+        while (binary_input_1 != 0 || binary_input_2 != 0) {
+            binary_sum[i++] = (int) (carry + (binary_input_1 % 10 + binary_input_2 % 10) % 2);
+            carry = (int) ((binary_input_1 % 10 + binary_input_2 % 10 + carry) / 2);
+            binary_input_1 = binary_input_1 / 10;
+            binary_input_2 = binary_input_2 / 10;
+        }
+        if (carry != 0) {
+            binary_sum[i++] = carry;
+        }
+        --i;
+        System.out.print("\nThe sum of the binary numbers is: ");
+        while (i >= 0) {
+            System.out.print(binary_sum[i--]);
+        }
+        System.out.print("\n");
+    }
+}
+
+//Date Formate
+
+import java.util.*;
+class Date{
+    String str,str1,str2;
+    public void get() {
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter date in this format (month/day/year) : ");
+        str=sc.next();
+        int i=0;
+        int index=i;
+        for(;i<str.length();i++) {
+            if(str.charAt(i)=='/') {
+                str2=month(str.substring(index,i));
+                index=i+1;
+                break;
+            }
+        }
+        for(i=index;i<str.length();i++) {
+            if(str.charAt(i)=='/') {
+                str1=str.substring(index,i);
+                index=i+1;
+                break;
+            }
+        }
+        System.out.println(str1+" "+str2+" "+str.substring(i+1,str.length()));
+    }
+    public String month(String temp_str) {
+        switch(temp_str) {
+            case ("1"):
+            case ("01"): {
+                return "January";
+            }
+            case ("2"):
+            case ("02"): {
+                return "February";
+            }
+            case ("3"):
+            case ("03"): {
+                return "March";
+            }
+            case ("4"):
+            case ("04"): {
+                return "April";
+            }
+            case ("5"):
+            case ("05"): {
+                return "May";
+            }
+            case ("6"):
+            case ("06"): {
+                return "June";
+            }
+            case ("7"):
+            case ("07"): {
+                return "July";
+            }
+            case ("8"):
+            case ("08"): {
+                return "August";
+            }
+            case ("9"):
+            case ("09"): {
+                return "September";
+            }
+            case "10":
+                return "October";
+            case "11":
+                return "November";
+            case "12":
+                return "December";
+        }
+        return temp_str;
+    }
+}
+public class DateFormat {
+    public static void main(String[] args) {
+        Date obj = new Date();
+        obj.get();
+    }
+}
