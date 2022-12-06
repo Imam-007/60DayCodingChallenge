@@ -1,0 +1,110 @@
+Given a binary grid of n*m. Find the /*
+distance of the nearest 1 in the grid for each cell.
+The distance is calculated as |i1  - i2| + |j1 - j2|, where i1, j1 are the row number and column number of the current cell, and i2, j2 are the row number and
+column number of the nearest cell having value 1.
+*/
+
+class Solution
+{
+    //Function to find distance of nearest 1 in the grid for each cell.
+    public int[][] nearest(int[][] grid)
+    {
+        // Code here
+         int[][] ans = new int[grid.length][grid[0].length];
+
+        int n = grid.length;
+
+        int m = grid[0].length;
+
+        Queue<int[]> q = new LinkedList<>();
+
+        for(int i = 0; i  < n; i++){
+
+            for(int j = 0; j < m; j++){
+
+                if(grid[i][j] == 1){
+
+                    ans[i][j] = 0;
+
+                    q.add(new int[]{i,j});
+
+                }else{
+
+                    ans[i][j] = -1;
+
+                }
+
+            }
+
+        }
+
+        while(!q.isEmpty()){
+
+            int[] res = q.poll();
+
+            int[] dx = {1,0,-1,0};
+
+            int[] dy = {0,1,0,-1};
+
+            for(int i = 0; i < dx.length; i++){
+
+                int nx = dx[i] + res[0];
+
+                int ny = dy[i] + res[1];
+
+                if(isValid(nx,ny,ans)){
+
+                    ans[nx][ny] = ans[res[0]][res[1]]+1;
+
+                    q.add(new int[]{nx,ny});
+
+                }
+
+            }
+
+        }
+
+        return ans;
+
+    }
+
+    
+
+    private boolean isValid(int nx,int ny,int[][] ans){
+
+        int row = ans.length;
+
+        int col = ans[0].length;
+
+        if(nx >= 0 && ny >= 0 && nx < row && ny < col && ans[nx][ny] == -1){
+
+            return true;
+
+        }
+
+        return false;
+    }
+}
+
+?
+/*
+Given an array of size N-1 such that it only contains distinct integers in the range of 1 to N. Find the missing element.
+*/
+
+ int MissingNumber(int array[], int n) {
+
+       int sum = 0, sumAll = 0;
+
+        for(int i = 0 ;i <n-1 ; i++){
+
+           sum = sum+array[i] ;
+
+        }
+
+        sumAll = n*(n+1)/2 ;
+
+        
+
+       return sumAll-sum;
+
+    }
