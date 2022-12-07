@@ -1,0 +1,48 @@
+/*
+Given a BST and an integer K. Find the Kth Smallest element in the BST using O(1) extra space.
+*/
+
+class Solution {
+    // Return the Kth smallest element in the given BST
+    public int KthSmallestElement(Node root, int K) {
+        // Write your code here
+        int[] cnt = {0};
+        return solve(root,cnt,K);
+    }
+    public int solve(Node root, int[] cnt, int k){
+        if(root ==  null){
+            return -1;
+        }
+        int left = solve(root.left,cnt,k);
+        if(left != -1){
+            return left;
+        }
+        cnt[0] += 1;
+        if(cnt[0] == k){
+            return root.data;
+        }
+        int right = solve(root.right,cnt,k);
+        return right;
+    }
+}
+
+/*
+Given an array of size N containing only 0s, 1s, and 2s; sort the array in ascending order.
+*/
+
+class Solution
+{
+    public static void sort012(int a[], int n)
+    {
+        // code here
+             Arrays.sort(a);
+
+        int c[]=new int[n];
+
+        int i=0;
+
+        for(int b:a)
+
+          c[i]=b;
+    }
+}
