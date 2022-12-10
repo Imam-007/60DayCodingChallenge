@@ -1,0 +1,70 @@
+/*
+Given a number k and string num of digits (0 to 9) denoting a positive integer. Find a string denoting the lowest integer number possible by removing k digits from num,
+without changing their order.
+Note: num will not contain any leading zero.
+*/
+
+class Solution {
+    static String buildLowestNumber(String str, int N) {
+        // code here
+        Stack<Character> stack = new Stack<>();
+        for(int i=0;i<str.length();i++) {
+            char c = str.charAt(i);
+            while(stack.size()>0 && stack.peek()>c && N>0) {
+                N--;
+                stack.pop();
+            }
+            stack.push(c);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(stack.size()>0) {
+            char c = stack.pop();
+            if(N>0) {
+                N--;
+                continue;
+            }
+            sb.append(Character.toString(c));
+        }
+        
+        String ans = sb.reverse().toString();
+        // To Remove Leading Zero
+        for(int i=0;i<ans.length();i++) {
+            if(ans.charAt(i)!='0') return ans.substring(i);
+        }
+        return "0";
+    }
+}
+/*
+Given the root of a binary tree, split the binary tree into two subtrees by removing one edge such that the product of the sums of the subtrees is maximized.
+
+Return the maximum product of the sums of the two subtrees. Since the answer may be too large, return it modulo 109 + 7.
+
+Note that you need to maximize the answer before taking the mod and not after taking it.
+*/
+
+class Solution {
+        static long sum;
+    static long maxProd;
+    public static void dfs(TreeNode root) {
+        if(root == null) return;
+        sum += (long)root.val;
+        dfs(root.left);
+        dfs(root.right);
+    }
+    public static long checkMax(TreeNode root) {
+        if(root == null) return 0;
+        long l = checkMax(root.left);
+        long r = checkMax(root.right);
+        maxProd = Math.max(maxProd, (l + r + root.val) * (sum - l - r - root.val));
+        return l + r + root.val;
+    }
+    public int maxProduct(TreeNode root) {
+        sum = 0;
+        maxProd = 0;
+        dfs(root);
+        long rootProd = checkMax(root);
+        return (int)(maxProd % ((int)Math.pow(10, 9) + 7));
+        
+    }
+}
