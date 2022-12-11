@@ -1,0 +1,69 @@
+/*
+Given an array of integers and a number k, write a function that returns true if given array can be divided into pairs such that sum of every pair is divisible by k.
+ */
+ 
+ class Solution {
+    public boolean canPair(int[] nums, int k) {
+        // Code here
+          int []fr = new int[k] ;
+
+        for(int x:nums)
+
+        {
+
+            int p  = x%k ;
+
+            if(fr[(k-p)%k]!=0)
+
+            {
+
+                fr[(k-p)%k]--;
+
+            }
+
+            else
+
+            fr[p]++;
+
+        }
+
+        for(int i:fr)
+
+        {
+
+            if(i!=0)
+
+            return false;
+
+        }
+
+        return true;
+    }
+}
+
+/*
+A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence
+at most once. Note that the path does not need to pass through the root.
+
+The path sum of a path is the sum of the node's values in the path.
+
+Given the root of a binary tree, return the maximum path sum of any non-empty path.
+*/
+
+class Solution {
+        int val = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        postOrder(root);
+        return val;
+    }
+    
+    private int postOrder(TreeNode root){
+        if(root == null) return 0;
+        int sumLeft = postOrder(root.left);
+        int sumRight = postOrder(root.right);
+        int max = Math.max(root.val,Math.max(root.val+sumLeft,Math.max(root.val+sumRight,root.val+sumRight+sumLeft)));
+        if(max>val) val = max;
+        return root.val>root.val+Math.max(sumLeft,sumRight)?root.val:root.val+Math.max(sumLeft,sumRight);
+        
+    }
+}
