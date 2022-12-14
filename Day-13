@@ -1,0 +1,62 @@
+/*
+You are given a binary string str. In a single operation, you can choose two indices L and R such that 1 ≤ L ≤ R ≤ N and complement the characters between L and R
+i.e strL, strL+1, …, strR. By complement, we mean change character 0 to 1 and vice-versa.
+
+You task is to perform ATMOST one operation such that in final string number of 1s is maximised. If there is no need to completement, i.e., string contains all 1s,
+return -1. Else, return the two values denoting L and R. If there are multiple solutions, return the lexicographically smallest pair of L and R.
+*/
+
+class Solve {
+
+    Vector<Integer> findRange(String str, int n) {
+        // code here
+        int l = -1;
+        int r = -1;
+        
+        int max = 0;
+        int count = 0;
+        
+        int maxL = -1;
+        int maxR = -1;
+        
+        for(int i=0; i<n; i++){
+            if(str.charAt(i) == '0'){
+                count++;
+            }
+            else{
+                count--;
+                if(count < 0){ l = -1; count = 0; }
+            }
+            
+            if(count == 1 && l == -1){ l = i; }
+            
+            if(count > max){ max = count; maxL = l+1; maxR = i+1; }
+        }
+        
+        Vector<Integer> ans = new Vector<>();
+        
+        ans.add(maxL);
+        
+        if(maxL != -1){ ans.add(maxR); }
+        
+        return ans;
+    }
+}
+
+/*
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing 
+each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same
+night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+*/
+
+class Solution {
+    public int rob(int[] nums) {
+           int prev=0, last=0;
+     for (int curr : nums)
+         last = Math.max(prev+curr, prev=last);
+     return last;
+        
+    }
+}
