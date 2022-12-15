@@ -1,0 +1,131 @@
+/*
+Given an integer N.Create a string using only lowercase characters from a to z that follows the given rules.
+
+When N is even:
+
+Use N/2 characters from the beginning of a-z and N/2 characters from the ending of a-z.
+
+When N is greater than 26,continue repeating the instructions until length of string becomes N.
+
+When N is odd:
+
+Case 1: If the sum of digits of N is even, Select (N+1)/2 characters from the beginning of a-z and (N-1)/2 characters from the ending of a-z.
+
+Case 2: If the sum of digits of N is odd, Select (N-1)/2 characters from the beginning of a-z and (N+1)/2 characters from the ending of a-z.
+
+When N is greater than 26,continue repeating the instructions until length of string becomes N.
+*/
+
+
+class Solution {
+    static String BalancedString(int N) {
+        // code here
+         char[] charArray = new char[N];
+        int start = 0,end=0;
+        int remainder = N%26;
+        int quotient = N/26;
+        for(int k = 1; k <= quotient; k++){
+            end = start + 26;
+            fillForward(charArray,start,end-1);
+            start = end;
+        }
+        if((N&1) == 0){
+            while(start < N){
+                int remaining_length = N-start;
+                end = start + remaining_length/2;
+                fillForward(charArray,start,end-1);
+                start = end;
+                end = start + remaining_length/2;
+                fillBackward(charArray,start,end-1);
+                start = end;
+            }
+        }
+        else{
+            int digitSum = calculateDigitsSum(N);
+            while(start < N){
+                int remaining_length = N-start;
+                if(digitSum %2 == 1){
+                    end = start + (remaining_length-1)/2;
+                    fillForward(charArray,start,end-1);
+                    start = end;
+                    end = start + (remaining_length+1)/2;
+                    fillBackward(charArray,start,end-1);
+                    start = end;
+                }
+                else{
+                    end = start + (remaining_length+1)/2;
+                    fillForward(charArray,start,end-1);
+                    start = end;
+                    end = start + (remaining_length-1)/2;
+                    fillBackward(charArray,start,end-1);
+                    start = end;
+                }
+            }
+        }
+        String ans = new String(charArray);
+        return ans;
+    }
+    static int calculateDigitsSum(int N){
+        int sum = 0;
+        while(N > 0){
+            sum += N%10;
+            N/=10;
+        }
+        return sum;
+    }
+    static void fillForward(char[] charArray,int start,int end){
+        int count = 0;
+        while(start <= end){
+            charArray[start] = (char)('a'+count);
+            start++;
+            count++;
+        }
+    }
+    static void fillBackward(char[] charArray,int start,int end){
+        int count = 25;
+        while(end >= start){
+            charArray[end] = (char)('a'+count);
+            end--;
+            count--;
+        }
+    }
+}
+/*
+Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.
+
+A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the
+remaining characters.
+
+For example, "ace" is a subsequence of "abcde".
+A common subsequence of two strings is a subsequence that is common to both strings.
+*/
+
+
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        if (text1.length() < text2.length()) {
+            return LCS(text1, text2);
+        }
+        return LCS(text2, text1);
+    }
+    //assumption: s1.length() < s2.length()
+    public int LCS(String s1, String s2) {
+        int[][] M = new int[2][s1.length() + 1];
+        //row represnets the length of s2, col represents the length of s1
+        
+        for (int i = 1; i <= s2.length(); i++) {
+            //base case
+            M[i % 2][0] = 0;
+            for (int j = 1; j <= s1.length(); j++) {
+                if (s1.charAt(j - 1) == s2.charAt(i - 1)) {
+                    M[i % 2][j] = M[(i - 1) % 2][j - 1] + 1;
+                } else {
+                    M[i % 2][j] = Math.max(M[(i - 1) % 2][j - 1],
+                                Math.max(M[(i - 1) % 2][j], M[i % 2][j - 1]));
+                }
+            }
+        }
+        return M[s2.length() % 2][s1.length()];
+        
+    }
+}
