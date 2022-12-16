@@ -1,0 +1,109 @@
+/*
+Aakriti, Avantika and Mehak are playing 2D Hopscotch. The arena is in the form of a n*m 2D matrix. But the position of the cells is slightly modified as shown below. 
+
+
+Mehak starts the game from tile (i,j) while Avantika and Aakriti direct her. In each turn Mehak will collect all the stones present (1 or 2) steps away from where she
+is standing. Avantika can direct Mehak to take 1 step and and Aakriti can direct Mehak to take 2 steps. 
+If the director ty is known to you as ty = 0 being Avantika and 1 being Aakriti, find the number of stones that Mehak will collect.
+*/
+
+class Solution{
+    static int hopscotch(int n, int m, int mat[][], int ty, int i, int j) 
+    {
+        // code here
+        int sum = 0;
+        
+        if (ty == 0) {
+            if ((j & 1) == 0) {
+                int[][] dir = {{-1,0}, {-1,1}, {0,1}, {1,0}, {0,-1}, {-1,-1}};
+                sum = addUp(mat, dir, i, j);
+            } else {
+                int[][] dir = {{-1,0}, {0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}};
+                sum = addUp(mat, dir, i, j);
+            }
+        } else {
+            if ((j & 1) == 0) {
+                int[][] dir = {{-1,2}, {0,2}, {1,2}, {1,1}, {2,0}, {1,-1}, {1,-2}, {0,-2}, {-1,-2}, {-2,-1}, {-2,0}, {-2,1}};
+                sum = addUp(mat, dir, i, j);
+            } else {
+                int[][] dir = {{-1,2}, {0,2}, {1,2}, {2,1}, {2,0}, {2,-1}, {1,-2}, {0,-2}, {-1,-2}, {-1,-1}, {-2,0}, {-1,1}};
+                sum = addUp(mat, dir, i, j);
+            }
+        }
+        
+        return sum;
+    }
+    
+    private static int addUp(int[][] mat, int[][] dir, int i, int j) {
+        int sum = 0;
+        
+        for (int[] d : dir) {
+            int x = i + d[0];
+            int y = j + d[1];
+            
+            if (x >= 0 && x < mat.length && y >= 0 && y < mat[0].length) {
+                sum += mat[x][y];
+            }
+        }
+        
+        return sum;
+    }
+}
+
+/*
+Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+
+Implement the MyQueue class:
+
+void push(int x) Pushes element x to the back of the queue.
+int pop() Removes the element from the front of the queue and returns it.
+int peek() Returns the element at the front of the queue.
+boolean empty() Returns true if the queue is empty, false otherwise.
+Notes:
+
+You must use only standard operations of a stack, which means only push to top, peek/pop from top, size, and is empty operations are valid.
+Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a 
+stack's standard operations.
+**/
+
+class MyQueue {
+     Deque<Integer> in;
+    Deque<Integer> out;
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        this.in = new LinkedList<Integer>();
+        this.out = new LinkedList<Integer>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        in.offerFirst(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        move();
+        return out.pollFirst();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        move();
+        return out.peekFirst();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return in.size() == 0 && out.size() == 0;
+    }
+    
+    /** Move all the elements from stack_in to stack_out */
+    private void move() {
+        if (out.isEmpty()) {
+            while (!in.isEmpty()) {
+                out.offerFirst(in.pollFirst());
+            }
+        }
+    }
+}
