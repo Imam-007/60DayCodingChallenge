@@ -1,0 +1,41 @@
+/*
+Given a really large number N, break it into 3 whole numbers such that they sum up to the original number and find the number of ways to do so. Since this number can 
+be very large, return it modulo 109+7. 
+*/
+
+class Solution{
+    int waysToBreakNumber(int N){
+        // code here
+         long mod = 1000000007;
+
+        long n = N;
+
+        return (int)((((n+1)*(n+2)/2))%mod);
+    }
+}
+
+/*
+Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+Valid operators are +, -, *, and /. Each operand may be an integer or another expression.
+
+Note that division between two integers should truncate toward zero.
+
+It is guaranteed that the given RPN expression is always valid. That means the expression would always evaluate to a result, and there will not be any division by
+zero operation.
+*/
+class Solution {
+    public int evalRPN(String[] tokens) {
+         Stack<Integer> stack = new Stack<>();
+        for (String s : tokens) {
+            if ("+".equals(s)) stack.push(stack.pop() + stack.pop());
+            else if ("-".equals(s)) stack.push(-stack.pop() + stack.pop());
+            else if ("/".equals(s)) stack.push((int)(1D / stack.pop() * stack.pop()));
+            else if ("*".equals(s)) stack.push(stack.pop() * stack.pop());
+            else stack.push(Integer.valueOf(s));
+        }
+
+        return stack.pop();
+        
+    }
+}
