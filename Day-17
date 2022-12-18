@@ -1,0 +1,138 @@
+/*
+
+Given an integer N. Find maximum LCM (Least Common Multiple) that can be obtained from four numbers less than or equal to N.
+Note: Duplicate numbers can be used.
+*/
+
+class Solution {
+    long maxGcd(int n) {
+        // code here
+         if(n==2) return 2;
+
+        if(n==3) return 6;
+
+        if(n==4) return 12;
+
+        if(n==7) return 420;
+
+        long x=(long)n;
+
+        long lcm=0;
+
+        switch(n%6){
+
+            case 0:
+
+            {
+
+                lcm=(x-1)*(x-2)*(x-3)*(x-5);
+
+                break;
+
+            }
+
+            case 1:
+
+            {  
+
+                if((x-6)%5!=0)
+
+                  lcm=x*(x-1)*(x-2)*(x-6);
+
+                else if((x-8)%7!=0)
+
+                  lcm=x*(x-1)*(x-2)*(x-8);
+
+                else
+
+                  lcm=x*(x-2)*(x-1)*(x-12);
+
+                break;
+
+            }
+
+            case 2:
+
+            {   
+
+                if(x%5!=0)
+
+                  lcm=x*(x-1)*(x-3)*(x-5);
+
+                else if((x-7)%7!=0)
+
+                  lcm=x*(x-1)*(x-3)*(x-7);
+
+                else
+
+                  lcm=(x-1)*(x-2)*(x-3)*(x-7);
+
+                break;
+
+            }
+
+            case 3:
+
+            {   
+
+                lcm=x*(x-1)*(x-2)*(x-4);
+
+                break;
+
+            }
+
+            case 4:
+
+            {  
+
+                if(x%5!=0)
+
+                  lcm=x*(x-1)*(x-3)*(x-5);
+
+                else 
+
+                  lcm=(x-1)*(x-2)*(x-3)*(x-5);
+
+                break;
+
+            }
+
+            case 5:
+
+            {   
+
+                lcm=x*(x-1)*(x-2)*(x-4);
+
+                break;
+
+            }
+
+        }
+
+        return lcm;
+    }
+}
+
+/*
+Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after
+the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+*/
+
+class Solution {
+    public int[] dailyTemperatures(int[] temp) {
+        int[] res = new int[temp.length];
+        for (int i = temp.length - 2; i >= 0; i--) {
+            int next = i + 1;
+            while (next < temp.length && temp[next] <= temp[i]) {
+                if (res[next] == 0) {
+                    next = temp.length;
+                    break;
+                }
+                next += res[next];
+            }
+            if (next < temp.length) res[i] = next - i;
+        }
+        return res;
+        
+    }
+}
