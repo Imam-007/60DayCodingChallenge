@@ -1,0 +1,94 @@
+/*
+Given a pattern and a string s, find if s follows the same pattern.
+
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+
+
+Example 1:
+
+Input: pattern = "abba", s = "dog cat cat dog"
+Output: true
+*/
+
+class Solution {
+    public boolean wordPattern(String p, String s) {
+        List<String>list=new ArrayList<>();
+        int low=0,k=0,i=0;
+        for(i=0;i<s.length();i++){
+            if(s.charAt(i)==' '){
+                list.add(s.substring(low,i));
+                low=i+1;
+            }
+
+        }
+        list.add(s.substring(low,s.length()));
+        if(p.length()!=list.size()){
+            return false;
+        }
+       
+        Map<Character,String>map1=new HashMap<>();
+        Map<String,Boolean>map2=new HashMap<>();
+
+        for(i=0;i<p.length();i++){
+            char ch1=p.charAt(i);
+            String ch2=list.get(i);
+            if(map1.containsKey(ch1)==true){
+                
+                if(!map1.get(ch1).equals(ch2)){
+                    
+                    
+                    return false;
+                }
+            }else if(map2.containsKey(ch2)==true){
+        
+                return false;
+            }else{
+                
+                map1.put(ch1,ch2);
+                map2.put(ch2,true);
+            }
+
+        }
+        return true;
+    }
+}
+
+/*
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, 
+but a character may map to itself.
+
+ 
+
+Example 1:
+
+Input: s = "egg", t = "add"
+Output: true
+*/
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        if(s.length()!=t.length()){
+            return false;
+        }
+        Map<Character,Character>map1=new HashMap<>();
+        Map<Character,Boolean>map2=new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char ch1=s.charAt(i);
+            char ch2=t.charAt(i);
+            if(map1.containsKey(ch1)==true){
+                if(map1.get(ch1)!=ch2){
+                    return false;
+                }
+            }else if(map2.containsKey(ch2)==true){
+                return false;
+            }else{
+                map1.put(ch1,ch2);
+                map2.put(ch2,true);
+            }
+        }
+        return true;
+    }
+}
