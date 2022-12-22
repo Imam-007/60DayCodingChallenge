@@ -1,0 +1,80 @@
+/*
+You are given an array arr[] of size n. Find the total count of sub-arrays having their sum equal to 0.
+
+
+Example 1:
+
+Input:
+n = 6
+arr[] = {0,0,5,5,0,0}
+Output: 6
+Explanation: The 6 subarrays are 
+[0], [0], [0], [0], [0,0], and [0,0].
+*/
+
+class Solution{
+    //Function to count subarrays with sum equal to 0.
+    public static long findSubarray(long[] arr ,int n) 
+    {
+        //Your code here
+          HashMap<Long, Long> map = new HashMap<>();
+
+        long sum =0, count =0;
+
+        map.put((long)0, (long)1);
+
+        for(int i=0; i< n; i++){
+
+            sum += arr[i];
+
+            if(map.containsKey(sum)){
+
+                count += map.get(sum);
+
+            }
+
+            map.put(sum, map.getOrDefault(sum, (long)0) + (long)1);
+
+        }
+
+        return count;
+    }
+}
+
+/*
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+*/
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        StringBuilder str=new StringBuilder("");
+        int len=Integer.MAX_VALUE;
+        for(int i=0;i<strs.length;i++){
+            if(strs[i].length()<len){
+                len=strs[i].length();
+            }
+        }
+        for(int i=0;i<len;i++){
+            boolean flag=true;
+            char ch=strs[0].charAt(i);
+            for(int j=0;j<strs.length;j++){
+                if(ch!=strs[j].charAt(i)){
+                    flag=false;
+                    return str.toString();
+                }
+            }
+            if(flag){
+                str.append(ch);
+            }
+        }
+        return str.toString();
+    }
+}
