@@ -1,0 +1,103 @@
+/*
+We are given an integer array asteroids of size N representing asteroids in a row. For each asteroid, the absolute value represents its size, and the sign represents
+its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.
+Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are of same size, both will explode. Two asteroids
+moving in the same direction will never meet.
+ 
+
+Example 1:
+
+Input:
+N = 3
+asteroids[ ] = {3, 5, -3}
+Output: {3, 5}
+Explanation: The asteroid 5 and -3 collide resulting in 5. The 5 and 3 never collide.
+
+*/
+class Solution {
+    public static int[] asteroidCollision(int N, int[] asteroids) {
+        // code here
+        Stack<Integer> stack = new Stack<>();
+        for(int i=0;i<N;i++) {
+            while(stack.size()>0) {
+                int idx = stack.peek();
+                if(asteroids[i]<0) {
+                    // left-movement
+                    if(asteroids[idx]>0) {
+                        // right-movement
+                        if(-asteroids[i]<asteroids[idx]) {
+                            asteroids[i]=0;
+                            break;
+                        } else if(-asteroids[i]==asteroids[idx]) {
+                            asteroids[i]=0;
+                            asteroids[idx]=0;
+                            stack.pop();
+                            break;
+                        } else {
+                            asteroids[idx]=0;
+                            stack.pop();
+                        }
+                    } else {
+                        // left-movement
+                        break;
+                    }
+                } else if(asteroids[i]==0) {
+                    break;
+                } else {
+                    // right-movement
+                    break;
+                }
+            }
+            
+            if(asteroids[i]!=0) {
+                stack.push(i);
+            }
+        }
+        int[] ans = new int[stack.size()];
+        int idx=ans.length-1;
+        while(stack.size()>0) {
+            ans[idx]=asteroids[stack.pop()];
+            idx--;
+        }
+        return ans;
+    }
+    
+    /*
+    An element is called a peak element if its value is not smaller than the value of its adjacent elements(if they exists).
+Given an array arr[] of size N, Return the index of any one of its peak elements.
+Note: The generated output will always be 1 if the index that you return is correct. Otherwise output will be 0. 
+
+
+Example 1:
+
+Input: 
+N = 3
+arr[] = {1,2,3}
+Possible Answer: 2
+Generated Output: 1
+Explanation: index 2 is 3.
+It is the peak element as it is 
+greater than its neighbour 2.
+If 2 is returned then the generated output will be 1 else 0.
+*/
+
+class Solution
+{
+	// Function to find the peak element
+	// arr[]: input array
+	// n: size of array a[]
+	public int peakElement(int[] arr,int n)
+    {
+       //add code here.
+       int max=Integer.MIN_VALUE;
+       int index=-1;
+       for(int i=0;i<n;i++){
+           if(arr[i]>max){
+               max=arr[i];
+               index=i;
+           }
+       }
+       return index;
+    }
+}
+}
