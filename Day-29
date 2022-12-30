@@ -1,0 +1,87 @@
+/*
+Given a binary tree, count the number of Single Valued Subtrees. A Single Valued Subtree is one in which all the nodes have same value. 
+
+Example 1
+
+Input :
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+Output : 4
+Explanation : 
+There are 4 subtrees with single values.
+
+*/
+
+class Solution
+{
+    int ans=0;
+    public int singlevalued(Node root)
+    {
+        //code here
+         solve(root);
+
+        return ans;
+
+    }
+
+      boolean solve(Node root){
+
+        if(root==null) return true;
+
+        boolean left=solve(root.left);
+
+        boolean right=solve(root.right);
+
+        if(left==false || right==false) return false;
+
+        if(root.left!=null && root.data!=root.left.data) return false;
+
+        if(root.right!=null  && root.data!=root.right.data) return false;
+
+         ans++;
+
+        return true;
+    }
+}
+
+/*
+Given an unsorted array Arr of size N of positive integers. One number 'A' from set {1, 2, …N} is missing and one number 'B' occurs twice in array. Find these two
+numbers.
+
+Example 1:
+
+Input:
+N = 2
+Arr[] = {2, 2}
+Output: 2 1
+Explanation: Repeating number is 2 and 
+smallest positive missing number is 1.
+
+*/
+
+class Solve {
+    int[] findTwoElement(int arr[], int n) {
+        // code here
+        int[] num=new int[2];
+        Map<Integer,Integer>map=new HashMap<>();
+        int j=0;
+        for(int i=0;i<n;i++){
+            if(map.containsKey(arr[i])==false){
+                map.put(arr[i],1);
+            }else{
+                num[j]=arr[i];
+                j++;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            if(map.containsKey(i)==false){
+                num[j]=i;
+                break;
+            }
+        }
+        return num;
+    }
+}
