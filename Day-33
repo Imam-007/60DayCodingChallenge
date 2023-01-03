@@ -1,0 +1,83 @@
+/*
+N Students of different heights are attending an assembly. The heights of the students are represented by an array H[]. The problem is that if a student has less or
+equal height than the student standing in front of him, then he/she cannot see the assembly. Find the minimum number of students to be removed such that maximum
+possible number of students can see the assembly.
+ 
+
+Example 1:
+
+Input:
+N = 6
+H[] = {9, 1, 2, 3, 1, 5}
+Output:
+2
+Explanation:
+We can remove the students at 0 and 4th index.
+which will leave the students with heights
+1,2,3, and 5.
+
+*/
+class Solution {
+  public:
+    int removeStudents(int H[], int N) {
+        // code here
+        vector<int>temp;
+
+        temp.push_back(H[0]);
+
+        
+
+        for(int i=1 ; i<N ; i++){
+
+            if(H[i] > temp.back()){
+
+                temp.push_back(H[i]);
+
+            }
+
+            else{
+
+                int idx=lower_bound(temp.begin(),temp.end(),H[i])-temp.begin();
+
+                temp[idx]=H[i];
+
+            }
+
+        }
+
+        
+
+        return N-temp.size();
+    }
+};
+
+/*
+Given a linked list of N nodes. The task is to reverse this list.
+
+Example 1:
+
+Input:
+LinkedList: 1->2->3->4->5->6
+Output: 6 5 4 3 2 1
+Explanation: After reversing the list, 
+elements are 6->5->4->3->2->1.
+
+*/
+class Solution
+{
+    //Function to reverse a linked list.
+    Node reverseList(Node head)
+    {
+        // code here
+        Node temp=head;
+        Node next=null,prev=null;
+        while(temp!=null){
+            next=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=next;
+        }
+        head=prev;
+        return head;
+    }
+}
