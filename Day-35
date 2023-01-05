@@ -1,0 +1,110 @@
+/*
+Given an array of strings arr[]. You have to find the longest string which is lexicographically smallest and also all of its prefix strings are already present in
+the array.
+
+ 
+
+Example 1:
+
+Input: ab a abc abd
+Output: abc
+Explanation: We can see that length of the longest 
+string is 3. And there are two string "abc" and "abd"
+of length 3. But for string "abc" , all of its prefix
+"a" "ab" "abc" are present in the array. So the
+output is "abc".
+
+*/
+class Solution {
+    public static String longestString(int n, String[] arr) {
+        // code here
+         Arrays.sort(arr);
+
+        
+
+        int max=0;
+
+        String ans="";
+
+        
+
+        HashMap<String,Integer> map=new HashMap<>();
+
+        for(String s:arr){
+
+            if(s.length()==1){
+
+                map.put(s,s.length());
+
+                if(s.length()>max){
+
+                    max=s.length();
+
+                    ans=s;
+
+                }
+
+            }
+
+            else{
+
+                if(map.containsKey(s.substring(0,s.length()-1)) && map.get(s.substring(0,s.length()-1))>0){
+
+                    map.put(s,s.length());
+
+                    if(s.length()>max){
+
+                        max=s.length();
+
+                        ans=s;
+
+                    }
+
+                }
+
+                else{ 
+
+                    map.put(s,0);
+
+                }
+
+            }
+
+        }
+
+        
+
+        return ans;
+    }
+}
+        
+/*
+Given a singly linked list of N nodes.
+The task is to find the middle of the linked list. For example, if the linked list is
+1-> 2->3->4->5, then the middle node of the list is 3.
+If there are two middle nodes(in case, when N is even), print the second middle element.
+For example, if the linked list given is 1->2->3->4->5->6, then the middle node of the list is 4.
+
+Example 1:
+
+Input:
+LinkedList: 1->2->3->4->5
+Output: 3 
+Explanation: 
+Middle of linked list is 3.
+
+*/
+class Solution
+{
+    int getMiddle(Node head)
+    {
+         // Your code here.
+         Node fastptr=head;
+         Node slowptr=head;
+         while(fastptr!=null&&fastptr.next!=null){
+             fastptr=fastptr.next.next;
+             slowptr=slowptr.next;
+         }
+         return slowptr.data;
+    }
+}
