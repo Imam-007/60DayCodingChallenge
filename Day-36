@@ -1,0 +1,110 @@
+/*
+You are given two four digit prime numbers Num1 and Num2. Find the distance of the shortest path from Num1 to Num2 that can be attained by altering only one single
+digit at a time. Every number obtained after changing a digit should be a four digit prime number with no leading zeros.
+
+
+Example 1:
+
+Input:
+Num1 = 1033 
+Num2 = 8179
+Output: 6
+Explanation:
+1033 -> 1733 -> 3733 -> 3739 -> 3779
+                 -> 8779 -> 8179.
+There are only 6 steps required to reach
+Num2 from Num1, and all the intermediate
+numbers are 4 digit prime numbers.
+
+*/
+class Solution
+{
+    int[] prime;
+    Solution()
+    {
+        // Every index of prime stores zero or one
+        // If prime[i] is zero means i is not a prime
+        // If prime[i] is one means i is a prime
+         prime = new int[10000];
+
+        Arrays.fill(prime, 1);
+
+        prime[0]=prime[1]=0;
+
+        for(int i=2;i*i<=10000;i++){
+
+            if(prime[i]==0) continue;
+
+            for(int j=2;i*j<10000;j++) prime[i*j]=0;
+
+        }
+
+        for(int i=0 ; i<1000;i++) prime[i]=0;
+
+    }
+    
+    public int shortestPath(int Num1,int Num2){
+        // Complete this function using prime array
+        Queue<int[]> q = new LinkedList<>();
+
+        int[] v = new int[10000];
+
+        q.add(new int[]{Num1,0});
+
+        v[Num1]=1;
+
+        while(!q.isEmpty()){
+
+            int[] p =q.poll();
+
+            if(p[0]==Num2) return p[1];
+
+            for(int i=1;i<=1000;i*=10){
+
+                for(int j=0;j<=9;j++){
+
+                    int z= p[0]/(i*10)*(i*10)+(j*i)+p[0]%i;
+
+                    if(prime[z]==1 && v[z]==0){
+
+                        v[z]=1;
+
+                        q.add(new int[]{z,p[1]+1});
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return -1;
+    }
+}
+
+/*
+Given an array, rotate the array by one position in clock-wise direction.
+ 
+
+Example 1:
+
+Input:
+N = 5
+A[] = {1, 2, 3, 4, 5}
+Output:
+5 1 2 3 4
+
+*/
+class Compute {
+    
+    public void rotate(int arr[], int n)
+    {
+        int num=arr[n-1],i;
+        for(i=n-1;i>0;i--){
+            arr[i]=arr[i-1];
+        }
+        arr[i]=num;
+        
+    }
+}
