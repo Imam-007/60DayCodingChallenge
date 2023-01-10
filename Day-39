@@ -1,0 +1,78 @@
+/*
+Given a Binary Tree of size N , where each node can have positive or negative values. Convert this to a tree where value of each node will be the sum of the values of
+all the nodes in left and right sub trees of the original tree. The values of leaf nodes are changed to 0.
+Note: You have to modify the given tree in-place.
+
+
+Example 1:
+
+Input:
+             10
+          /      \
+        -2        6
+       /   \     /  \
+      8    -4   7    5
+Output:
+            20
+          /     \
+        4        12
+       /  \     /  \
+     0     0   0    0
+Explanation:
+           (4-2+12+6)
+          /           \
+      (8-4)          (7+5)
+       /   \         /  \
+      0     0       0    0
+*/
+
+      
+  class Solution{
+    public void toSumTree(Node root){
+         //add code here.
+         solve(root);
+    }
+    int solve(Node r){
+        if(r==null) return 0;
+        int oldv=r.data;
+        r.data=solve(r.left) + solve(r.right);
+        return oldv+r.data;
+    }
+}
+
+/*
+Given a singly linked list of size N. The task is to left-shift the linked list by k nodes, where k is a given positive integer smaller than or equal to length of the linked list.
+
+Example 1:
+
+Input:
+N = 5
+value[] = {2, 4, 7, 8, 9}
+k = 3
+Output: 8 9 2 4 7
+Explanation:
+Rotate 1: 4 -> 7 -> 8 -> 9 -> 2
+Rotate 2: 7 -> 8 -> 9 -> 2 -> 4
+Rotate 3: 8 -> 9 -> 2 -> 4 -> 7
+
+*/
+
+class Solution{
+    //Function to rotate a linked list.
+    public Node rotate(Node head, int k) {
+        // add code here
+        int i=0;
+        while(i<k){
+            Node temp1=head;
+            Node temp2=head;
+            head=head.next;
+            while(temp1.next!=null){
+                temp1=temp1.next;
+            }
+            temp1.next=temp2;
+            temp2.next=null;
+            i++;
+        }
+        return head;
+    }
+}
