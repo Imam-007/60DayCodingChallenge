@@ -1,0 +1,84 @@
+/*
+You are given N elements, you can remove any two elements from the list, note their sum, and add the sum to the list. Repeat these steps while there is more than
+a single element in the list. The task is to minimize the sum of these chosen sums.
+
+ 
+
+Example 1:
+
+Input:
+N = 4
+arr[] = {1, 4, 7, 10}
+
+Output:
+39
+
+Explanation:
+Choose 1 and 4, Sum = 1 + 4 = 5.
+arr[] = {5, 7, 10} 
+Choose 5 and 7, Sum = 5 + (5 + 7) = 17.
+arr[] = {12, 10} 
+Choose 12 and 10, Sum = 17 + (12 + 10) = 39.
+arr[] = {22}
+*/
+
+class Solution {
+    long minimizeSum(int N, int arr[]) {
+        // code here
+        PriorityQueue<Long> q=new PriorityQueue<>();
+        for(int i:arr){
+            q.offer((long)i);
+        }
+        long sum=0,a=0,b=0;
+        
+        while(q.size()>1){
+            sum+=(a=q.poll())+(b=q.poll());
+            q.offer(a+b);
+            // System.out.println(sum+" "+q.peek());
+        }
+        return sum;
+    }
+}
+
+/*
+You are given an array arr[] of N integers including 0. The task is to find the smallest positive number missing from the array.
+
+Example 1:
+
+Input:
+N = 5
+arr[] = {1,2,3,4,5}
+Output: 6
+Explanation: Smallest positive missing 
+number is 6.
+
+*/
+
+class Solution
+{
+    //Function to find the smallest positive number missing from the array.
+    static int missingNumber(int arr[], int size)
+    {
+        // Your code here
+        Map<Integer,Boolean>map=new HashMap<>();
+        map.put(0,true);
+        for(int i=0;i<size;i++){
+            if(map.containsKey(arr[i])==false){
+                map.put(arr[i],true);
+            }
+        }
+        int min=0;
+        for(int i=1;i<size;i++){
+            if(min>arr[i]&&arr[i]>0){
+                min=arr[i];
+            }
+        }
+        int i;
+        for(i=min;i<=size;i++){
+            if(map.containsKey(i)==false){
+                return i;
+            }
+        }
+        return i;
+    }
+}
