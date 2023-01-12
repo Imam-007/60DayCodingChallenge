@@ -1,0 +1,62 @@
+/*
+
+Given a sorted array containing only 0s and 1s, find the transition point. 
+
+
+Example 1:
+
+Input:
+N = 5
+arr[] = {0,0,0,1,1}
+Output: 3
+Explanation: index 3 is the transition 
+point where 1 begins.
+
+*/
+int transitionPoint(int arr[], int n) {
+    // code here
+    int val=0;
+    for(int i=0;i<n;i++){
+        if(arr[i]>val){
+            return i;
+        }
+    }
+    return -1;
+}
+
+/*
+Given an array having both positive and negative integers. The task is to compute the length of the largest subarray with sum 0.
+
+Example 1:
+
+Input:
+N = 8
+A[] = {15,-2,2,-8,1,7,10,23}
+Output: 5
+Explanation: The largest subarray with
+sum 0 will be -2 2 -8 1 7.
+
+*/
+
+class GfG
+{
+    int maxLen(int arr[], int n)
+    {
+        // Your code here
+        HashMap<Integer,Integer>map=new HashMap<>();
+        
+        int sum=0;
+        map.put(0,-1);
+        int len=0;
+        for(int i=0;i<n;i++){
+            
+            sum=sum+arr[i];
+            if(map.containsKey(sum)){
+               len=Math.max(len,Math.abs(i-map.get(sum)));
+            }else{
+                map.put(sum,i);
+               }
+        }
+        return len;
+    }
+}
