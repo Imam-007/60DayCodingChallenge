@@ -1,0 +1,92 @@
+/*
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+You should preserve the original relative order of the nodes in each of the two partitions.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,4,3,2,5,2], x = 3
+Output: [1,2,2,4,3,5]
+
+*/
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        ListNode temp1=new ListNode(0);
+        ListNode temp2=new ListNode(0);
+        ListNode ans=temp1,temp=head,ans1=temp2;
+        while(temp!=null){
+            if(temp.val<x){
+                temp1.next=new ListNode(temp.val);
+                temp1=temp1.next;
+                
+            }else{
+                temp2.next=new ListNode(temp.val);
+                temp2=temp2.next;
+               
+            }
+            temp=temp.next;
+        }
+        temp1.next=ans1.next;
+        ans=ans.next;
+        ListNode tail=null,tail1=null;
+        while(ans!=null){
+            if(tail==null){
+                tail=tail1=new ListNode(ans.val);
+            }else{
+                tail1.next=new ListNode(ans.val);
+                tail1=tail1.next;
+            }
+            ans=ans.next;
+        }
+        return tail;
+    }
+}
+
+/*
+
+You are given the head of a linked list.
+
+Remove every node which has a node with a strictly greater value anywhere to the right side of it.
+
+Return the head of the modified linked list.
+
+ 
+
+Example 1:
+
+
+Input: head = [5,2,13,3,8]
+Output: [13,8]
+Explanation: The nodes that should be removed are 5, 2 and 3.
+- Node 13 is to the right of node 5.
+- Node 13 is to the right of node 2.
+- Node 8 is to the right of node 3.
+
+*/
+
+class Solution {
+    public ListNode removeNodes(ListNode head) {
+        List<Integer> list=new ArrayList<>();
+        ListNode temp=head;
+        while(temp!=null){
+            while(list.size()>0&&list.get(list.size()-1)<temp.val){
+                list.remove(list.size()-1);
+            }
+            list.add(temp.val);
+            temp=temp.next;            
+        }
+        ListNode tail=null,tail1=null;
+        for(int i=0;i<list.size();i++){
+            if(tail==null){
+                tail=tail1=new ListNode(list.get(i));
+            }else{
+                tail1.next=new ListNode(list.get(i));
+                tail1=tail1.next;
+            }
+        }
+        return tail;
+    }
+}
