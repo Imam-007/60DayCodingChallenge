@@ -1,0 +1,88 @@
+/*
+There is a carpet of a size a*b [length * breadth]. You are given a box of size c*d. The task is, one has to fit the carpet in the box in a minimum number of moves. 
+
+In one move, you can either decrease the length or the breadth of the carpet by half (floor value of its half).
+
+Note: One can even turn the carpet by 90 degrees any number of times, wont be counted as a move.
+
+ 
+
+Example 1:
+
+Input:
+A = 8, B = 13
+C = 6, D = 10
+Output:
+Minimum number of moves: 1
+Explanation:
+Fold the carpet by breadth, 13/2 i.e. 6, 
+so now carpet is 6*8 and can fit fine.
+
+*/
+
+class Solution{
+    int carpetBox(int A, int B, int C, int D) { 
+        //code here
+        int step=0;
+        int l1=Math.max(A,B),b1=Math.min(A,B),l=Math.max(C,D),b=Math.min(C,D);
+        while(l1>l || b1>b) {
+            if(l1>l && b1>b) {
+                l1/=2;
+            } else if(l1>l) {
+                l1/=2;
+            } else {
+                b1/=2;
+            }
+            
+            A=l1;
+            B=b1;
+            l1 = Math.max(A,B);
+            b1 = Math.min(A,B);
+            
+            step++;
+        }
+        
+        return step;
+        
+    }
+   
+}
+
+/*
+An element is called a peak element if its value is not smaller than the value of its adjacent elements(if they exists).
+Given an array arr[] of size N, Return the index of any one of its peak elements.
+Note: The generated output will always be 1 if the index that you return is correct. Otherwise output will be 0. 
+
+
+Example 1:
+
+Input: 
+N = 3
+arr[] = {1,2,3}
+Possible Answer: 2
+Generated Output: 1
+Explanation: index 2 is 3.
+It is the peak element as it is 
+greater than its neighbour 2.
+If 2 is returned then the generated output will be 1 else 0.
+*/
+
+class Solution
+{
+	// Function to find the peak element
+	// arr[]: input array
+	// n: size of array a[]
+	public int peakElement(int[] arr,int n)
+    {
+       //add code here.
+       int max=Integer.MIN_VALUE;
+       int index=-1;
+       for(int i=0;i<n;i++){
+           if(arr[i]>max){
+               max=arr[i];
+               index=i;
+           }
+       }
+       return index;
+    }
+}
