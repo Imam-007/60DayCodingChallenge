@@ -1,0 +1,115 @@
+/*
+Given two integers A and B, the task is to find an integer X such that (X XOR A) is minimum possible and the count of set bit in X is equal to the count of set bits
+in B.
+
+Example 1:
+
+Input: 
+A = 3, B = 5
+Output: 3
+Explanation:
+Binary(A) = Binary(3) = 011
+Binary(B) = Binary(5) = 101
+The XOR will be minimum when x = 3
+i.e. (3 XOR 3) = 0 and the number
+of set bits in 3 is equal
+to the number of set bits in 5.
+
+*/
+class Solution {
+        // code here
+         private static int countSetBits(int x)
+    {
+        int ans = 0;
+        
+        while(x>0)
+        {
+            if(x%2==1) ans++;
+            x = x/2;
+        }
+        
+        return ans;
+    }
+    
+    private static int setBitAtPos(int x, int pos)
+    {
+        return x | (1<<pos);
+    }
+    
+    public static int minVal(int a, int b) {
+        
+        int count = countSetBits(b);
+        
+        
+        int x = 0;
+        
+        for(int i=31; i>=0; i--)
+        {
+            if(count==0) break;
+            
+            if(((a&(1<<i)) != 0) && count>0)
+            {
+                
+                x = setBitAtPos(x, i);
+                count--;
+            }
+        }
+        
+        if(count==0) return x;
+        
+        for(int i=0; i<31; i++)
+        {
+            if(((a&(1<<i))==0) && count>0)
+            {
+                x = setBitAtPos(x, i);
+                count--;
+            }
+        }
+        
+        return x;
+    }
+}
+
+/*
+Given an array arr of size n and an integer X. Find if there's a triplet in the array which sums up to the given integer X.
+
+
+Example 1:
+
+Input:
+n = 6, X = 13
+arr[] = [1 4 45 6 10 8]
+Output:
+1
+Explanation:
+The triplet {1, 4, 8} in 
+the array sums up to 13.
+
+*/
+
+class Solution
+{
+    //Function to find if there exists a triplet in the 
+    //array A[] which sums up to X.
+    public static boolean find3Numbers(int arr[], int n, int x) { 
+    
+       // Your code Here
+       Arrays.sort(arr);
+       for(int i=0;i<n;i++){
+           int num=x-arr[i];
+           int low=i+1;
+           int high=n-1;
+           while(low<high){
+               if(arr[low]+arr[high]==num){
+                   return true;
+               }else if(arr[low]+arr[high]>num){
+                   high--;
+               }else{
+                   low++;
+               }
+           }
+       }
+       return false;
+    
+    }
+}
