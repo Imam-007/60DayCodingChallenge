@@ -1,0 +1,101 @@
+/*
+Geek is extremely punctual but today even he is not feeling like doing his homework assignment. He must start doing it immediately in order to meet the deadline. For
+the assignment, Geek needs to type a string s.
+To reduce his workload, he has decided to perform one of the following two operations till he gets the string.
+
+Append a character at the end of the string.
+Append the string formed thus far to the end of the string. (This can not be done more than once.)
+Help Geek find the minimum operations required to type the given string.
+
+
+Example 1:
+
+Input:
+s = abcabca
+Output: 5
+Explanation: a -> ab -> abc -> abcabc 
+-> abcabca
+
+*/
+
+class Solution {
+    int minOperation(String s) {
+        // code here
+        if(s.length()==1)return 1;
+
+      int max=Integer.MIN_VALUE;
+
+      String temp=s.charAt(0)+"";
+
+      for(int i=1;i<s.length();i++){
+
+         int k=i;
+
+         int index=i;
+
+         for(int j=0;j<temp.length();j++){
+
+             if(k<s.length() && temp.charAt(j)==s.charAt(k)){
+
+                k++;
+
+                continue;
+
+             }
+
+             else{
+
+                break;
+
+             }
+
+         }
+
+         max=Math.max(max,k-i);
+
+          if(k-i==temp.length()){
+
+             temp+=s.substring(i,k);
+
+             i=k-1;
+
+         }
+
+         else{
+
+             temp+=s.charAt(i);
+
+          }
+
+     }
+
+      return s.length()-max+1;
+    }
+}
+
+/*
+Given an array, rotate the array by one position in clock-wise direction.
+ 
+
+Example 1:
+
+Input:
+N = 5
+A[] = {1, 2, 3, 4, 5}
+Output:
+5 1 2 3 4
+
+*/
+
+class Compute {
+    
+    public void rotate(int arr[], int n)
+    {
+        int num=arr[n-1],i;
+        for(i=n-1;i>0;i--){
+            arr[i]=arr[i-1];
+        }
+        arr[i]=num;
+        
+    }
+}
