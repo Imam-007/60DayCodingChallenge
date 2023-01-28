@@ -1,0 +1,101 @@
+/*
+Given two strings S1 and S2 of equal length, the task is to determine if S2 is a scrambled form of S1.
+
+Scrambled string: Given string str, we can represent it as a binary tree by partitioning it into two non-empty substrings recursively.
+Below is one possible representation of str = coder:
+ 
+To scramble the string, we may choose any non-leaf node and swap its two children. 
+Suppose, we choose the node co and swap its two children, it produces a scrambled string ocder.
+Similarly, if we continue to swap the children of nodes der and er, it produces a scrambled string ocred.
+
+Note: Scrambled string is not the same as an Anagram.
+
+Print "Yes" if S2 is a scrambled form of S1 otherwise print "No".
+
+Example 1:
+
+Input: S1="coder", S2="ocder"
+Output: Yes
+Explanation: ocder is a scrambled 
+form of coder.
+
+    ocder
+   /    \
+  oc    der
+ / \    
+o   c  
+
+As "ocder" can represent it 
+as a binary tree by partitioning 
+it into two non-empty substrings.
+We just have to swap 'o' and 'c' 
+to get "coder".
+
+*/
+
+class Solution{
+    static HashMap<String,Boolean> map=new HashMap<>();
+    static boolean isScramble(String s1,String s2)
+    {
+        //code here
+        if(s1.equals(s2))
+        {
+            return true;
+        }
+        String key=s1+"_"+s2;
+        if(map.containsKey(key))
+        {
+            return map.get(key);
+        }
+        boolean flag=false;
+        int n=s1.length();
+        for(int i=1;i<n;i++)
+        {
+             boolean swap=(isScramble(s1.substring(0, i),s2.substring(n - i,n)) && isScramble(s1.substring(i, n),s2.substring(0, n-i)));
+            boolean noswap=(isScramble(s1.substring(0, i),s2.substring(0, i))  && isScramble(s1.substring(i, n),s2.substring(i, n)));
+            if(noswap||swap)
+            {
+                flag=true;
+                break;
+            }
+        }
+        map.put(key,flag);
+        return flag;
+    }
+}
+
+/*
+Given an array Arr[] of N positive integers. The task is to find the maximum of j - i subjected to the constraint of Arr[i] <= Arr[j].
+
+Example 1:
+
+Input:
+N = 9
+Arr[] = {34, 8, 10, 3, 2, 80, 30, 33, 1}
+Output: 6
+Explanation: In the given array Arr[1] <
+Arr[7]  satisfying the required condition
+(Arr[i] <= Arr[j])  thus giving the
+maximum difference of j - i which is
+6(7-1).
+
+*/
+
+class Solution {
+
+    int maxIndexDiff(int arr[], int n) {
+        // code here
+        int max=0;
+        for(int i=0;i<n-1;i++){
+            for(int j=n-1;j>=0;j--){
+                if(arr[i]<=arr[j]){
+                    if(max<j-i){
+                        max=j-i;
+                    }
+                    break;
+                }
+            }
+        }
+        return max;
+    }
+}
