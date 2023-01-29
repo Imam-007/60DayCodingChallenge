@@ -1,0 +1,63 @@
+/*
+Given two numbers a and b. In one operation you can pick any non negative integer x and either of a or b. Now if you picked a then replace a with a&x else if you
+picked b then replace b with b&x.
+
+Return the minimum number of operation required to make a and b equal.
+
+Note: Here & represents bitwise AND operation.
+
+Example 1:
+
+Input:
+a = 5, b = 12
+Output:
+2
+Explanantion:
+In first operation replace 
+a = a&4 = 4
+after that replace 
+b = b&6 = 4
+Hence both are same after applying two
+operations.
+*/
+
+class Solution {
+    public static int solve(int a, int b) {
+        // code here
+        if(a==b) return 0;
+        if((a&b)==Math.min(a,b))
+        return 1; return 2;
+    }
+}
+        
+/*
+Given a sorted array arr[] of distinct integers. Sort the array into a wave-like array(In Place).
+In other words, arrange the elements into a sequence such that arr[1] >= arr[2] <= arr[3] >= arr[4] <= arr[5].....
+
+If there are multiple solutions, find the lexicographically smallest one.
+
+Example 1:
+
+Input:
+n = 5
+arr[] = {1,2,3,4,5}
+Output: 2 1 4 3 5
+Explanation: Array elements after 
+sorting it in wave form are 
+2 1 4 3 5.
+*/
+
+class Solution{
+    public static void convertToWave(int arr[], int n){
+        
+        // Your code here
+        for(int i=0;i<n-1;i+=2){
+            
+            int temp=arr[i];
+            arr[i]=arr[i+1];
+            arr[i+1]=temp;
+        }
+        
+    }
+    
+}
