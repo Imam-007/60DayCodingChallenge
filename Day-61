@@ -1,0 +1,66 @@
+/*
+Given two strings A and B. Find minimum number of times A has to be repeated such that B is a Substring of it. If B can never be a substring then return -1.
+
+ 
+
+Example 1:
+
+Input:
+A = "abcd"
+B = "cdabcdab"
+Output:
+3
+Explanation:
+Repeating A three times (abcdabcdabcd),
+B is a substring of it. B is not a substring
+of A when it is repeated less than 3 times.
+
+*/
+
+class Solution {
+    static int minRepeats(String A, String B) {
+        // code here
+        int c=1;
+        String str=A;
+        while(A.length()<B.length()){
+            A+=str;
+            c++;
+        }
+        if(A.contains(B))return c;
+        if((A+str).contains(B)) return c+1;
+        else return -1;
+    }
+};
+
+/*
+Given two numbers as strings s1 and s2. Calculate their Product.
+
+Note: The numbers can be negative and You are not allowed to use any built-in function or convert the strings to integers.
+
+
+Example 1:
+
+Input:
+s1 = "33"
+s2 = "2"
+Output:
+66
+
+*/
+
+class Solution
+{
+    public String multiplyStrings(String s1,String s2)
+    {
+        //code here.
+        BigInteger num1 = new BigInteger(s1);;
+
+BigInteger num2 = new BigInteger(s2);
+       
+
+BigInteger res = num1.multiply(num2);
+String result = res.toString(10);
+
+return result;
+    }
+}
