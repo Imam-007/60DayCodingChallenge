@@ -1,0 +1,103 @@
+/*
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+
+ 
+
+Example 1:
+
+Input:
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+Explanation:
+Y ShapedLinked List
+
+*/
+
+class Intersect
+{
+    //Function to find intersection point in Y shaped Linked Lists.
+	int intersectPoint(Node head1, Node head2)
+	{
+         // code here
+         Node temp = head1;
+         int len1 = 0;
+         while(temp != null){
+             len1++;
+             temp = temp.next;
+         }
+         
+         temp = head2;
+         int len2 = 0;
+         while(temp != null){
+            len2++;
+            temp = temp.next;
+         }
+         
+        int k = Math.abs(len1-len2);
+        
+        if(len1 < len2){
+            Node tmp = head1;
+            head1 = head2;
+            head2 = tmp;
+        }
+        temp = head1;
+        while(temp != null && k > 0){
+            temp = temp.next;
+            k--;
+        }
+        Node temp2 = head2;
+        while(temp != null && temp2 != null){
+            if(temp == temp2){
+                return temp.data;
+            }
+            temp = temp.next;
+            temp2 = temp2.next;
+        }
+        return -1;
+	}
+}
+
+/*
+A top secret message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+You are an FBI agent. You have to determine the total number of ways that message can be decoded, as the answer can be large return the answer modulo 109 + 7.
+Note: An empty digit sequence is considered to have one decoding. It may be assumed that the input contains valid digits from 0 to 9 and If there are leading 0s,
+extra trailing 0s and two or more consecutive 0s then it is an invalid string.
+
+Example 1:
+
+Input: str = "123"
+Output: 3
+Explanation: "123" can be decoded as "ABC"(123),
+"LC"(12 3) and "AW"(1 23).
+
+*/
+
+class Solution
+{
+      // code here
+        int mod = (int)(1e9 + 7);
+    Integer[] dp = new Integer[10001];
+    
+    public int CountWays(String str){
+        int len = str.length();
+        //base case
+        if(len == 0) return 1;
+        if(str.charAt(0) == '0') return 0;
+        
+        if(dp[len] != null) return dp[len];
+        
+        int ans = CountWays(str.substring(1));
+        // checking for legit letter 
+        if(len > 1 && Integer.parseInt(str.substring(0, 2)) < 27){
+            ans = (ans + CountWays(str.substring(2)))%mod;
+        }
+        return dp[len] = ans;
+    }
+}
