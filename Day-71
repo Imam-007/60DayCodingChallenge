@@ -1,0 +1,105 @@
+/*
+Bob is very fond of balloons. Once he visited an amusement park with his mother. The mother told Bob that she would buy him a balloon only if he answer her problem right.
+She gave Bob a string S [contains only lowercase characters] and asked him to use the characters of string to form as many instances of the word "balloon" as possible.
+Return the maximum number of instances that can be formed.
+
+Help Bob to solve the problem.
+
+Note: You can use each character in the string at most once.
+
+Example 1:
+
+Input:
+S: nlaebolko
+Output: 1
+Explanation:
+Here, the number of occurence of 'b' = 1
+of occurence of 'a' = 1
+of occurence of 'l' = 2
+of occurence of 'o' = 2
+of occurence of 'n' = 1
+So, we can form 1 "balloon" using the letters.
+
+*/
+
+class Solution {
+     private int[] calcMem(String str)
+    {
+        int mem[] = new int[26];
+        
+        for(char ch : str.toCharArray())
+        {
+            mem[ch-'a']++;
+        }
+        
+        return mem;
+    }
+    
+    private int maxInstance(int mem[], int str_mem[])
+    {
+        int ans = Integer.MAX_VALUE;
+        for(int i=0; i<26; i++)
+        {
+            if(str_mem[i]>0)
+            {
+                ans = Math.min(ans, mem[i]/str_mem[i]);
+            }
+        }
+        
+        return ans;
+    }
+    
+    public int maxInstance(String s) {
+        
+        int mem[] = calcMem(s);
+        int str_mem[] = calcMem("balloon");
+        
+        return maxInstance(mem, str_mem);
+        
+    }
+}
+
+
+/*
+You are given an array arr[] of size n. Find the total count of sub-arrays having their sum equal to 0.
+
+
+Example 1:
+
+Input:
+n = 6
+arr[] = {0,0,5,5,0,0}
+Output: 6
+Explanation: The 6 subarrays are 
+[0], [0], [0], [0], [0,0], and [0,0].
+
+*/
+
+class Solution{
+    //Function to count subarrays with sum equal to 0.
+    public static long findSubarray(long[] arr ,int n) 
+    {
+        //Your code here
+          HashMap<Long, Long> map = new HashMap<>();
+
+        long sum =0, count =0;
+
+        map.put((long)0, (long)1);
+
+        for(int i=0; i< n; i++){
+
+            sum += arr[i];
+
+            if(map.containsKey(sum)){
+
+                count += map.get(sum);
+
+            }
+
+            map.put(sum, map.getOrDefault(sum, (long)0) + (long)1);
+
+        }
+
+        return count;
+    }
+}
