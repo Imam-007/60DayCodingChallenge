@@ -1,0 +1,143 @@
+/*
+You are given the head of a linked list. You have to replace all the values of the nodes with the nearest prime number. If more than one prime number exists at an equal
+distance, choose the smallest one.
+
+Example 1:
+
+Input:
+2 → 6 → 10
+Output:
+2 → 5 → 11
+Explanation:
+The nearest prime of 2 is 2 itself.
+The nearest primes of 6 are 5 and 7,
+since 5 is smaller so, 5 will be chosen.
+The nearest prime of 10 is 11.
+
+*/
+
+class Solution
+{
+     boolean isPrime(int n){
+
+        if (n <= 1) {
+
+            return false;
+
+        }
+
+        if (n == 2) {
+
+            return true;
+
+        }
+
+        for (int i = 2; i <= Math.sqrt(n) + 1; i++) {
+
+            if (n % i == 0) {
+
+                return false;
+
+            }
+
+        }
+
+        return true;
+
+    }
+
+    Node primeList(Node head){
+
+        Node root = head;
+
+        while(root!=null){
+
+            int val = root.val;
+
+            if(val==1){
+
+                root.val = 2;
+
+                root = root.next;
+
+            }
+
+            else if(isPrime(val))
+
+                root = root.next;
+
+            else{
+
+                int x = val-1,y=val+1;
+
+                while(!isPrime(x) && !isPrime(y)){
+
+                    x--;
+
+                    y++;
+
+                }
+
+                if(isPrime(x))
+
+                    root.val = x;
+
+                else 
+
+                    root.val = y;
+
+                root = root.next;
+
+            }
+
+        }
+
+        return head;
+        
+    }
+}
+
+
+/*
+You are given an array arr[] of size n. Find the total count of sub-arrays having their sum equal to 0.
+
+
+Example 1:
+
+Input:
+n = 6
+arr[] = {0,0,5,5,0,0}
+Output: 6
+Explanation: The 6 subarrays are 
+[0], [0], [0], [0], [0,0], and [0,0].
+
+*/
+
+class Solution{
+    //Function to count subarrays with sum equal to 0.
+    public static long findSubarray(long[] arr ,int n) 
+    {
+        //Your code here
+          HashMap<Long, Long> map = new HashMap<>();
+
+        long sum =0, count =0;
+
+        map.put((long)0, (long)1);
+
+        for(int i=0; i< n; i++){
+
+            sum += arr[i];
+
+            if(map.containsKey(sum)){
+
+                count += map.get(sum);
+
+            }
+
+            map.put(sum, map.getOrDefault(sum, (long)0) + (long)1);
+
+        }
+
+        return count;
+    }
+}
