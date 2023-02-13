@@ -1,0 +1,75 @@
+/*
+Given three integers  'A' denoting the first term of an arithmetic sequence , 'C' denoting the common difference of an arithmetic sequence and an integer 'B'. you need
+to tell whether 'B' exists in the arithmetic sequence or not. Return 1 if B is present in the sequence. Otherwise, returns 0.
+
+Example 1:
+
+Input: A = 1, B = 3, C = 2
+Output: 1
+Explaination: 3 is the second term of the 
+sequence starting with 1 and having a common 
+difference 2.
+
+*/
+
+class Solution{
+    static int inSequence(int A, int B, int C){
+        // code here
+        ;
+
+          if(C==0)
+
+        return 0;
+
+      double  ans=s%C;
+
+      int ans1=((B-A)/C);
+
+      if(ans==0&&ans1>=0)
+
+      return 1;
+
+      else
+
+      return 0;
+    }
+}
+
+
+/*
+Given two sorted arrays array1 and array2 of size m and n respectively. Find the median of the two sorted arrays.
+
+Example 1:
+
+Input:
+m = 3, n = 4
+array1[] = {1,5,9}
+array2[] = {2,3,6,7}
+Output: 5
+Explanation: The middle element for
+{1,2,3,5,6,7,9} is 5
+
+*/
+
+class GFG 
+{ 
+    static double medianOfArrays(int n, int m, int a[], int b[]) 
+    {
+        // Your Code Here
+        int[] arr=new int[n+m];
+        for(int i=0;i<n;i++){
+            arr[i]=a[i];
+        }
+        for(int i=0;i<m;i++){
+            arr[n+i]=b[i];
+        }
+        Arrays.sort(arr);
+        double res=0;
+        if(arr.length%2==0){
+            res=(arr[arr.length/2-1]+arr[arr.length/2])/2.0;
+        }else{
+            res=arr[arr.length/2];
+        }
+        return res;
+    }
+}
