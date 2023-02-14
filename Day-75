@@ -1,0 +1,71 @@
+/*
+There is a row of N walls in Geeksland. The king of Geeksland ordered Alexa to color all the walls on the occasion of New Year. Alexa can color each wall with either
+pink, black, or yellow. The cost associated with coloring each wall with a particular color is represented by a 2D array colors of size N*3 , where colors[i][0],
+colors[i][1], and colors[i][2] is the cost of painting ith wall with colors pink, black, and yellow respectively.
+
+You need to find the minimum cost to color all the walls such that no two adjacent walls have the same color.
+
+Example 1:
+
+Input:
+N = 3
+colors[][] = {{14, 2, 11},
+             {11, 14, 5},
+             {14, 3, 10}}
+Output:
+10
+Explanation:
+Color wall 0 with black. Cost = 2. 
+Color wall 1 with yellow. Cost = 5. 
+Color wall 2 with black. Cost = 3.
+Total Cost = 2 + 5 + 3 = 10
+
+*/
+
+class Solution{
+	int minCost(int [][] colors, int N){
+        //Write your code here
+        for(int i=N-2; i>=0; i--){
+            
+            colors[i][0] += Math.min( colors[i+1][1], colors[i+1][2] );
+            colors[i][1] += Math.min( colors[i+1][0], colors[i+1][2] );
+            colors[i][2] += Math.min( colors[i+1][0], colors[i+1][1] );
+            
+        }
+        
+        return Math.min( colors[0][0], Math.min( colors[0][1], colors[0][2] ) );
+    }
+}
+
+
+/*
+Given an array Arr of size N containing positive integers. Count number of smaller elements on right side of each array element.
+
+Example 1:
+
+Input:
+N = 7
+Arr[] = {12, 1, 2, 3, 0, 11, 4}
+Output: 6 1 1 1 0 1 0
+Explanation: There are 6 elements right
+after 12. There are 1 element right after
+1. And so on.
+
+*/
+
+class Solution {
+    int[] constructLowerArray(int[] arr, int n) {
+        // code here
+        int[] brr=new int[n];
+        for(int i=0;i<n-1;i++){
+            int count=0;
+            for(int j=i+1;j<n;j++){
+               if(arr[i]>arr[j]){
+                   count++;
+               } 
+            }
+            brr[i]=count;
+        }
+        return brr;
+    }
+}
