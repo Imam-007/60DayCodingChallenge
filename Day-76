@@ -1,0 +1,62 @@
+/*
+Given an array Arr of size N containing positive integers. Count number of smaller elements on right side of each array element.
+
+Example 1:
+
+Input:
+N = 7
+Arr[] = {12, 1, 2, 3, 0, 11, 4}
+Output: 6 1 1 1 0 1 0
+Explanation: There are 6 elements right
+after 12. There are 1 element right after
+1. And so on.
+
+*/
+
+class Solution {
+    int[] constructLowerArray(int[] arr, int n) {
+        // code here
+        int[] brr=new int[n];
+        for(int i=0;i<n-1;i++){
+            int count=0;
+            for(int j=i+1;j<n;j++){
+               if(arr[i]>arr[j]){
+                   count++;
+               } 
+            }
+            brr[i]=count;
+        }
+        return brr;
+    }
+}
+
+/*
+Given an array of size N, find the smallest positive integer value that is either not presented in the array or cannot be represented as a sum(coz sum means you are
+adding two or more elements) of some elements from the array.
+Example 1:
+
+Input: 
+N = 6
+array[] = {1, 10, 3, 11, 6, 15}
+Output: 
+2
+Explanation:
+2 is the smallest integer value that cannot 
+be represented as sum of elements from the array.
+
+*/
+
+class Solution { 
+    long smallestpositive(long[] arr, int n){ 
+        // Your code goes here 
+        Arrays.sort(arr);
+        long ans=1;
+        for(int i=0;i<n;i++){
+            if(arr[i]>ans){
+                return ans;
+            }
+            ans+=arr[i];
+        }
+        return ans;
+    }
+} 
