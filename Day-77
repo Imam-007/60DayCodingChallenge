@@ -1,0 +1,63 @@
+/*
+Geek is in a geekland which have a river and some stones in it. Initially geek can step on any stone. Each stone has a number on it representing the value of exact step
+geek can move. If the number is +ve then geeks can move right and if the number is -ve then geeks can move left. Bad Stones are defined as the stones in which if geeks
+steps, will reach a never ending loop whereas good stones are the stones which are safe from never ending loops. Return the number of good stones in river.
+
+Example 1:
+
+Input: [2, 3, -1, 2, -2, 4, 1]
+Output: 3
+Explanation: Index 3, 5 and 6 are safe only. As index 1, 4, 2 forms a cycle and from index 0 you can go to index 2 which is part of cycle.
+
+*/
+
+class Solution {
+    public static int goodStones(int n, int[] arr) {
+        // code here
+        Boolean [] v = new Boolean[n];
+        int ans=0;
+        for(int i=0; i<n; i++){
+            rec(i, v, arr, n);
+        }
+        for(boolean k: v) if(k) ans++;
+        return ans;
+    }
+    public static boolean rec(int i, Boolean [] v, int[]a, int n){
+        if(i>=n || i<0) return true;
+        if(v[i]!=null && v[i]== false) return false;
+        v[i]= false;
+        v[i]= rec(i+a[i], v, a, n);
+        return v[i];
+    }
+}
+
+/*
+Given an array of size N, find the smallest positive integer value that is either not presented in the array or cannot be represented as a sum(coz sum means you are
+adding two or more elements) of some elements from the array.
+Example 1:
+
+Input: 
+N = 6
+array[] = {1, 10, 3, 11, 6, 15}
+Output: 
+2
+Explanation:
+2 is the smallest integer value that cannot 
+be represented as sum of elements from the array.
+
+*/
+
+class Solution { 
+    long smallestpositive(long[] arr, int n){ 
+        // Your code goes here 
+        Arrays.sort(arr);
+        long ans=1;
+        for(int i=0;i<n;i++){
+            if(arr[i]>ans){
+                return ans;
+            }
+            ans+=arr[i];
+        }
+        return ans;
+    }
+} 
